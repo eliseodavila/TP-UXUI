@@ -116,14 +116,24 @@ label {
   color: #fff;
 }
 
+/* 🔹 BOTÓN DE VOLVER MÁS GRANDE */
 .btn-bottom-left {
   position: absolute;
   bottom: 20px;
   left: 20px;
+  font-size: 1.6rem;
+  padding: 12px 24px;
+  border: 2px solid #063a32;
+  border-radius: 12px;
+  background-color: #ffffff;
+  color: #063a32;
+  font-weight: 500;
 }
+
 .btn-continue{
   font-size: small;
 }
+
 /* Footer */
 footer {
   background-color: #063a32;
@@ -158,6 +168,7 @@ footer {
     font-size: x-small;
   }
 }
+
 /* Pantallas pequeñas (móviles) */
 @media (max-width: 576px) {
   .container {
@@ -197,7 +208,12 @@ footer {
     border-width: 1px;
     border-radius: 10px;
   }
+
+  /* 🔹 BOTÓN VOLVER MÁS GRANDE EN MÓVIL TAMBIÉN */
   .btn-bottom-left {
-    font-size: xx-small;
+    font-size: 1.3rem;
+    padding: 10px 18px;
+    border-width: 2px;
+    border-radius: 10px;
   }
 }
