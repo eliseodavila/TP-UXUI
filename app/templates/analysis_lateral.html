@@ -4,23 +4,20 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Análisis Lateral</title>
-    <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
-      rel="stylesheet"
-    />
-    <link
-      rel="stylesheet"
-      href="{{ url_for('static', filename='css/analysis_lateral.css') }}"
-    />
-    <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css"
-      rel="stylesheet"
-    />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/analysis_lateral.css') }}" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet" />
   </head>
   <body>
     <div class="container">
-      <!-- Header -->
-      <header>
+      <!-- Header con logo -->
+      <header class="d-flex flex-column align-items-center py-3 mb-4 border-bottom">
+        <img
+          src="{{ url_for('static', filename='img/logo.png') }}"
+          alt="Logo de KiEs"
+          class="img-fluid mb-2"
+          style="max-height:80px;width:auto;"
+        />
         <h1 class="text-center">ANÁLISIS LATERAL</h1>
       </header>
 
@@ -34,7 +31,6 @@
       <div class="info-box" id="infoBox">
         <i class="bi bi-info-circle"></i>
         Para realizar el análisis, deberás marcar 6 puntos en la siguiente secuencia:
-
         Puntos p1 y p2: Marca el inicio y el final de una trayectoria lineal a la altura cervical.
         Puntos p3 y p4: Marca el inicio y el final de una trayectoria lineal a la altura dorsal.
         Puntos p5 y p6: Marca el inicio y el final de una trayectoria lineal a la altura lumbar.
@@ -53,24 +49,18 @@
               onchange="previewImage(event)"
             />
             <img
-            src="{{ url_for('static', filename='img/monigoto_lateral.avif') }}"
-            width="30px"
-            style="opacity: 0.7"
-            alt="Imagen de ejemplo"
-          />
+              src="{{ url_for('static', filename='img/monigoto_lateral.avif') }}"
+              width="30"
+              style="opacity:.7"
+              alt="Imagen de ejemplo"
+            />
             Haz clic aquí para seleccionar una imagen
           </label>
         </div>
 
         <div class="text-center">
           <div class="image-container" id="imageContainer">
-            <img
-              id="imagePreview"
-              src="#"
-              alt="Vista previa de la imagen"
-              style="display: none"
-              onclick="markPoint(event)"
-            />
+            <img id="imagePreview" src="#" alt="Vista previa de la imagen" style="display:none" onclick="markPoint(event)" />
             <button class="remove-img" onclick="removeImage()" id="removeImg">
               <i class="bi bi-x-circle"></i>
             </button>
@@ -78,19 +68,10 @@
         </div>
 
         <!-- Control Buttons -->
-        <button
-          type="button"
-          class="btn btn-light remove-button"
-          onclick="removePoint()"
-        >
-        <i class="bi bi-x icon-remove"></i> Remover ultimo punto
+        <button type="button" class="btn btn-light remove-button" onclick="removePoint()">
+          <i class="bi bi-x icon-remove"></i> Remover ultimo punto
         </button>
-        <button
-          type="submit"
-          class="button btn btn-outline-success btn-custom"
-          id="analyzeButton"
-          onclick="analyzePoints()"
-        >
+        <button type="submit" class="button btn btn-outline-success btn-custom" id="analyzeButton" onclick="analyzePoints()">
           ANALIZAR PUNTOS
         </button>
       </div>
@@ -101,25 +82,18 @@
       </div>
 
       <!-- Save Analysis and Back Button -->
-      <button
-        type="submit"
-        id="generateButton"
-        class="button btn btn-outline-success btn-custom"
-      >
+      <button type="submit" id="generateButton" class="button btn btn-outline-success btn-custom">
         GUARDAR ANÁLISIS
       </button>
-      <a
-        href="{{ url_for('analysis_selection') }}"
-        class="btn btn-light btn-bottom-left"
-      >
+      <a href="{{ url_for('analysis_selection') }}" class="btn btn-light btn-bottom-left">
         <i class="bi bi-arrow-left"></i> Volver a sección de análisis
       </a>
     </div>
 
     <!-- Scripts -->
-    <script src="..\static\js\analisys_lateral\script.js"></script>
+    <script src="{{ url_for('static', filename='js/analisys_lateral/script.js') }}"></script>
     <!-- Botón oculto para análisis -->
-    <button id="analyzeButton" style="display: none">Analizar</button>
+    <button id="analyzeButton" style="display:none">Analizar</button>
 
     <!-- Footer -->
     <footer>
@@ -127,16 +101,14 @@
     </footer>
 
     <!-- External Libraries -->
-    <script
-      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
-      integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
-      crossorigin="anonymous"
-    ></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+            crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 
     <!-- PDF Generation Script -->
-  <script>
+    <script>
       const pacienteDatos = JSON.parse('{{ paciente | tojson | safe }}');
 
       function generatePDF() {
@@ -144,21 +116,18 @@
         const doc = new jsPDF();
         let lineSpacing = 8;
         const marginLeft = 15;
-        let yPosition = 20; // Posición inicial
+        let yPosition = 20;
 
-        // Título del documento
-        doc.setFont("Helvetica", "bold");
+        // Título
+        doc.setFont("Helvetica","bold");
         doc.setFontSize(14);
-        doc.text("ANÁLISIS DE IMAGEN LATERAL", 105, 20, {
-          align: "center",
-        });
+        doc.text("ANÁLISIS DE IMAGEN LATERAL", 105, 20, { align: "center" });
         doc.setLineWidth(0.5);
-        doc.line(65, 21, 144, 21); // Subrayado del título
+        doc.line(65, 21, 144, 21);
 
-        // Agregar logo
+        // Logo (ruta de Flask)
         const logoImg = new Image();
-        logoImg.src = "static/img/logo.png";
-
+        logoImg.src = "{{ url_for('static', filename='img/logo.png') }}";
         logoImg.onload = function () {
           const logoWidth = 16;
           const logoHeight = (logoImg.height / logoImg.width) * logoWidth;
@@ -167,52 +136,28 @@
           doc.setFontSize(6);
           doc.text("KiEs", 18, 28, { align: "center" });
 
-          // Información del paciente
-          doc.setFont("Helvetica", "normal");
+          // Datos del paciente
+          doc.setFont("Helvetica","normal");
           doc.setFontSize(12);
           doc.text("DATOS DEL PACIENTE:", 15, 45);
           doc.setLineWidth(0.3);
-          doc.line(15, 46, 62, 46); // Línea debajo de "DATOS DEL PACIENTE"
+          doc.line(15, 46, 62, 46);
 
           const datosPacienteY = 52;
           lineSpacing = 4;
           doc.setFontSize(10);
-          doc.setFont("Helvetica", "Oblique");
+          doc.setFont("Helvetica","Oblique");
           doc.text(`DNI: ${pacienteDatos["dni"]}`, 15, datosPacienteY);
-          doc.text(
-            `Nombre: ${pacienteDatos.name}`,
-            15,
-            datosPacienteY + lineSpacing
-          );
-          doc.text(
-            `Edad: ${pacienteDatos.age}`,
-            15,
-            datosPacienteY + 2 * lineSpacing
-          );
-          doc.text(
-            `Altura: ${pacienteDatos.height}`,
-            15,
-            datosPacienteY + 3 * lineSpacing
-          );
-          doc.text(
-            `Peso: ${pacienteDatos.weight}`,
-            15,
-            datosPacienteY + 4 * lineSpacing
-          );
-          doc.text(
-            `Fecha de análisis: ${pacienteDatos.consultaDate}`,
-            15,
-            datosPacienteY + 5 * lineSpacing
-          );
-          doc.text(
-            `Historial: ${pacienteDatos.historial}`,
-            15,
-            datosPacienteY + 6 * lineSpacing
-          );
+          doc.text(`Nombre: ${pacienteDatos.name}`, 15, datosPacienteY + lineSpacing);
+          doc.text(`Edad: ${pacienteDatos.age}`, 15, datosPacienteY + 2*lineSpacing);
+          doc.text(`Altura: ${pacienteDatos.height}`, 15, datosPacienteY + 3*lineSpacing);
+          doc.text(`Peso: ${pacienteDatos.weight}`, 15, datosPacienteY + 4*lineSpacing);
+          doc.text(`Fecha de análisis: ${pacienteDatos.consultaDate}`, 15, datosPacienteY + 5*lineSpacing);
+          doc.text(`Historial: ${pacienteDatos.historial}`, 15, datosPacienteY + 6*lineSpacing);
 
-          const imageYPosition = datosPacienteY + 6 * lineSpacing + 5; // Ajuste para la línea superior de la imagen
+          const imageYPosition = datosPacienteY + 6*lineSpacing + 5;
 
-          // Capturar la imagen del análisis y agregarla al PDF
+          // Capturar imagen del análisis
           const imageContainer = document.getElementById("imageContainer");
           html2canvas(imageContainer).then((canvas) => {
             const imgWidth = canvas.width;
@@ -226,60 +171,41 @@
             const posX = (pdfWidth - imgScaledWidth) / 2;
             const posY = imageYPosition + 5;
 
-            // Línea superior de la imagen
+            // Línea superior e imagen
             doc.line(15, imageYPosition, pdfWidth - 15, imageYPosition);
-
-            // Agregar la imagen escalada y centrada
             const imgData = canvas.toDataURL("image/png");
-            doc.addImage(
-              imgData,
-              "PNG",
-              posX,
-              posY,
-              imgScaledWidth,
-              imgScaledHeight
-            );
+            doc.addImage(imgData, "PNG", posX, posY, imgScaledWidth, imgScaledHeight);
 
-            // Línea inferior de la imagen
+            // Línea inferior
             const lineBelowImage = posY + imgScaledHeight + 5;
             doc.line(15, lineBelowImage, pdfWidth - 15, lineBelowImage);
 
-            // Título "RESULTADOS DE ANÁLISIS" debajo de la imagen
-            doc.setFont("Helvetica", "normal");
+            // Resultados
+            doc.setFont("Helvetica","normal");
             doc.setFontSize(12);
             doc.text("RESULTADOS DE ANÁLISIS:", 15, lineBelowImage + 10);
             doc.setLineWidth(0.3);
             doc.line(15, lineBelowImage + 11, 71, lineBelowImage + 11);
 
-            // Lista de angulos
             yPosition = lineBelowImage + 18;
             doc.setFontSize(10);
-            doc.setFont("Helvetica", "Oblique");
-            
-            // Verificación y cálculo de ángulos
+            doc.setFont("Helvetica","Oblique");
+
+            // Si hay puntos, calcular y escribir ángulos
             if (points.length >= 3) {
               const anguloCervical = calcularAngulo(points[0], points[1], points[2], points[3]);
               const evaluacionCervical = evaluarCervical(anguloCervical);
-              doc.text(
-                `• Ángulo Dorsal: ${anguloCervical.toFixed(2)}° - ${evaluacionCervical}`,
-                15,
-               yPosition
-              );
+              doc.text(`• Ángulo Dorsal: ${anguloCervical.toFixed(2)}° - ${evaluacionCervical}`, 15, yPosition);
               yPosition += lineSpacing;
 
               if (points.length >= 4) {
                 const anguloDorsal = calcularAngulo(points[2], points[3], points[4], points[5]);
                 const evaluacionDorsal = evaluarDorsal(anguloDorsal);
-                doc.text(
-                  `• Ángulo Lumbar: ${anguloDorsal.toFixed(2)}° - ${evaluacionDorsal}`,
-                  15,
-                  yPosition
-                );
+                doc.text(`• Ángulo Lumbar: ${anguloDorsal.toFixed(2)}° - ${evaluacionDorsal}`, 15, yPosition);
               }
             }
 
-            // Guardar el PDF
-        doc.save(`Análisis_lateral_${pacienteDatos["dni"]}_${pacienteDatos.consultaDate}.pdf`);
+            doc.save(`Análisis_lateral_${pacienteDatos["dni"]}_${pacienteDatos.consultaDate}.pdf`);
           });
         };
       }
